@@ -1,0 +1,26 @@
+题目：
+给定一个整数数组 nums 和一个目标值 target，请你在数组中找出和为目标值的两个整数，并返回它们的数组下标。
+你可以假设每种输入只会对应一个答案。
+数组中同一个元素不能使用两遍。
+你可以按任意顺序返回答案。
+
+怎么想？
+核心就是：找补数。
+遍历数组时，对每个数 num，我都算一下 target - num 等于多少，这个数就是它的 “另一半”。
+用一个字典存一下已经见过的数字和它们的下标。
+只要补数已经在字典里了，直接返回两个下标就行，一次遍历搞定，时间复杂度 O (n)。
+
+class Solution:
+    def twoSum(self, nums, target):
+        seen = {}
+        for i, num in enumerate(nums):
+            complement = target - num
+            if complement in seen:
+                return [seen[complement], i]
+            seen[num] = i
+
+# 测试
+if __name__ == "__main__":
+    s = Solution()
+    print(s.twoSum([2, 7, 11, 15], 9))  # [0, 1]
+    print(s.twoSum([3, 3], 6))          # [0, 1]
